@@ -484,8 +484,10 @@ showMenu();
 fit();
 requestAnimationFrame(frame);
 
+/* @test-hooks:start */
 // 테스트용
 window.__ws = { get state() { return state; }, get tubes() { return tubes; }, get sel() { return sel; }, get level() { return level; }, get moves() { return moves; },
   get hintsLeft() { return hintsLeft; }, get extraLeft() { return extraLeft; }, get history() { return history; }, get start() { return start; }, get pos() { return pos; },
   select, undo, addTube, useHint, newLevel, update, draw, showMenu, W, H, TW, TH, BTN, BTN_Y };
+/* @test-hooks:end */
 })();
