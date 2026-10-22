@@ -1,4 +1,6 @@
 'use strict';
+// 오락실 튜토리얼이 '진짜로 일어난 일'을 알아채는 신호 (arcade/public/tutorial.js 가 듣는다. 튜토리얼이 아니면 아무도 안 듣는다)
+const tutorialSignal = (type) => window.dispatchEvent(new CustomEvent('arcade:tutorial', { detail: { type } }));
 
 // 물 정렬: 화면·입력·흐름. 판 규칙은 logic.js (LOGIC) 에 있다.
 (() => {
@@ -140,7 +142,7 @@ function select(i) {
   hint = null;
   if (sel < 0) {
     if (!tubes[i].length) return;                      // 빈 병은 고를 수 없다
-    sel = i; sfx.pick();
+    sel = i; sfx.pick(); tutorialSignal('pick');
     return;
   }
   if (sel === i) { sel = -1; sfx.drop(); return; }
@@ -154,6 +156,7 @@ function doPour(a, b) {
   history.push(tubes.map((t) => t.slice()));
   const { color, n } = L.pour(tubes, a, b);
   moves++;
+  tutorialSignal('pour');
   sel = -1;
   anims.set(a, { kind: 'out', color, n, t: 0 });
   anims.set(b, { kind: 'in', color, n, t: 0 });
